@@ -453,17 +453,11 @@ export async function getVaultOwnerAndNonce(marketId: PublicKey, dexProgramId: P
                 [marketId.toBuffer(), vaultNonce.toArrayLike(Buffer, 'le', 8)],
                 dexProgramId,
             );
-            console.log("getVaultOwnerAndNonce, vaultOwner: ", vaultOwner.toString(), " nonce: ", vaultNonce.toString())
             return {vaultOwner, vaultNonce};
         } catch (e) {
-            // console.log("getVaultOwnerAndNonce:", nonce.toNumber())
             vaultNonce.iaddn(1);
         }
     }
-}
-
-export async function genSerumVaultSignerWithNonce(marketId: PublicKey, dexProgramId: PublicKey, nonce: anchor.BN) {
-
 }
 
 export async function signTransactions({

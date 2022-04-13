@@ -1,9 +1,7 @@
 {
     "dependencies": {
         "@project-serum/anchor": "^0.23.0",
-        "@raydium-io/raydium-sdk": "^1.0.1-beta.46",
-        "raydium-ui": "raydium-io/raydium-ui",
-        "serum-dex-ui": "project-serum/serum-dex-ui"
+        "@raydium-io/raydium-sdk": "^1.0.1-beta.46"
     },
     "devDependencies": {
         "@types/chai": "^4.3.0",
