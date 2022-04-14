@@ -18,7 +18,7 @@ pub struct InitializeInstruction {
     /// nonce used to create valid program address
     pub nonce: u8,
     /// open time
-    pub open_time: u64
+    pub open_time: u64,
 }
 
 /// deposit instruction data
@@ -28,9 +28,9 @@ pub struct DepositInstruction {
     /// Pool token amount to transfer. token_a and token_b amount are set by
     /// the current exchange rate and size of the pool
     pub max_coin_amount: u64,
-    /// 
+    ///
     pub max_pc_amount: u64,
-    /// 
+    ///
     pub base_side: u64,
 }
 
@@ -233,7 +233,10 @@ impl AmmInstruction {
             }
             10 => {
                 let (nonce, _rest) = Self::unpack_u8(rest)?;
-                Self::PreInitialize(InitializeInstruction { nonce:nonce, open_time:0 })
+                Self::PreInitialize(InitializeInstruction {
+                    nonce: nonce,
+                    open_time: 0,
+                })
             }
             11 => {
                 let (max_amount_in, rest) = Self::unpack_u64(rest)?;
@@ -322,7 +325,10 @@ impl AmmInstruction {
                 buf.extend_from_slice(&amount_in.to_le_bytes());
                 buf.extend_from_slice(&minimum_amount_out.to_le_bytes());
             }
-            Self::PreInitialize(InitializeInstruction { nonce, open_time:_ }) => {
+            Self::PreInitialize(InitializeInstruction {
+                nonce,
+                open_time: _,
+            }) => {
                 buf.push(10);
                 buf.push(*nonce);
             }
@@ -357,7 +363,10 @@ pub fn pre_initialize(
 
     nonce: u8,
 ) -> Result<Instruction, ProgramError> {
-    let init_data = AmmInstruction::PreInitialize(InitializeInstruction {nonce:nonce, open_time:0 });
+    let init_data = AmmInstruction::PreInitialize(InitializeInstruction {
+        nonce: nonce,
+        open_time: 0,
+    });
     let data = init_data.pack()?;
 
     let accounts = vec![
@@ -553,12 +562,10 @@ pub fn withdraw(
         AccountMeta::new(*user_coin_token_account, false),
         AccountMeta::new(*user_pc_token_account, false),
         AccountMeta::new_readonly(*user_owner, true),
-
         AccountMeta::new(*serum_event_q, false),
         AccountMeta::new(*serum_bids, false),
         AccountMeta::new(*serum_asks, false),
     ];
-
 
     Ok(Instruction {
         program_id: *program_id,

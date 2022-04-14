@@ -6,12 +6,34 @@ pub struct ProxyInitialize<'info> {
     /// CHECK: Safe
     pub amm_program: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"amm_associated_seed"], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub amm: AccountInfo<'info>,
     /// CHECK: Safe
+    #[account(
+        mut, 
+        seeds = [b"amm authority"], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub amm_authority: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"open_order_associated_seed"], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub amm_open_orders: AccountInfo<'info>,
     /// CHECK: Safe
     #[account(mut)]

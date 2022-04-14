@@ -10,7 +10,7 @@ mod instructions;
 pub use accounts::*;
 pub use instructions::*;
 
-use anchor_lang::{prelude::*,solana_program};
+use anchor_lang::{prelude::*, solana_program};
 
 /// Creates a `pre_initialize` instruction
 pub fn pre_initialize<'a, 'b, 'c, 'info>(
@@ -271,7 +271,6 @@ pub fn swap_base_in<'a, 'b, 'c, 'info>(
     )?;
     Ok(())
 }
-
 
 /// Creates an 'swap_base_out' instruction.
 pub fn swap_base_out<'a, 'b, 'c, 'info>(

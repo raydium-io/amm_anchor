@@ -5,28 +5,33 @@ use anchor_lang::prelude::*;
 /// Accounts for an `pre_initialize` instruction.
 #[derive(Accounts, Clone)]
 pub struct PreInitialize<'info> {
-    /// AMM target orders account
+    /// AMM target orders account, a PDA create with seed = [program_id,serum_market_id, b"target_associated_seed"]
     #[account(mut)]
     pub amm_target_orders: AccountInfo<'info>,
-    /// Withdraw queue Account. To save withdraw dest_coin & dest_pc account with must cancle orders.
+    /// Withdraw queue Account, a PDA create with seed = [program_id,serum_market_id, b"withdraw_associated_seed"].
+    /// To save withdraw dest_coin & dest_pc account with must cancle orders.
     #[account(mut)]
     pub pool_withdraw_queue: AccountInfo<'info>,
-    /// Amm authority, a PDA account derived with seed `amm authority` and amm program address
+    /// Amm authority, a PDA create with seed = [b"amm authority"]
     pub amm_authority: AccountInfo<'info>,
-    /// Pool lp mint account. Must be empty, owned by $authority.
+    /// Pool lp mint account, a PDA create with seed = [program_id,serum_market_id, b"lp_mint_associated_seed"].
+    /// Must be empty, owned by $authority.
     #[account(mut)]
     pub lp_mint: AccountInfo<'info>,
     /// Coin mint account
     pub coin_mint: AccountInfo<'info>,
     /// Pc mint account
     pub pc_mint: AccountInfo<'info>,
-    /// Pool_token_coin Account. Must be non zero, owned by $authority
+    /// Pool_token_coin Account.  a PDA create with seed = [program_id,serum_market_id, b"coin_vault_associated_seed"].
+    /// Must be non zero, owned by $authority
     #[account(mut)]
     pub pool_coin_token_account: AccountInfo<'info>,
-    /// Pool_token_pc Account. Must be non zero, owned by $authority.
+    /// Pool_token_pc Account, a PDA create with seed = [program_id,serum_market_id, b"pc_vault_associated_seed"].
+    /// Must be non zero, owned by $authority.
     #[account(mut)]
     pub pool_pc_token_account: AccountInfo<'info>,
-    /// Token_temp_lp Account. To save withdraw lp with must cancle orders as temp to transfer later.
+    /// Token_temp_lp Account, a PDA create with seed = [program_id,serum_market_id, b"temp_lp_token_associated_seed"].
+    /// To save withdraw lp with must cancle orders as temp to transfer later.
     #[account(mut)]
     pub pool_temp_lp_token_account: AccountInfo<'info>,
     /// Serum market Account. serum_dex program is the owner.
@@ -43,12 +48,12 @@ pub struct PreInitialize<'info> {
 /// Accounts for an `initialize` instruction.
 #[derive(Accounts, Clone)]
 pub struct Initialize<'info> {
-    /// The new amm Account to create
+    /// The new amm Account to be create, a PDA create with seed = [program_id,serum_market_id, b"amm_associated_seed"]
     #[account(mut)]
     pub amm: AccountInfo<'info>,
-    /// Amm authority, a PDA account derived with seed `amm authority` and amm program address
+    /// Amm authority, a PDA create with seed = [b"amm authority"]
     pub amm_authority: AccountInfo<'info>,
-    /// Amm open_orders Account
+    /// Amm open_orders Account, a PDA create with seed = [program_id,serum_market_id, b"open_order_associated_seed"]
     #[account(mut)]
     pub amm_open_orders: AccountInfo<'info>,
     /// Pool lp mint account. Must be empty, owned by $authority.

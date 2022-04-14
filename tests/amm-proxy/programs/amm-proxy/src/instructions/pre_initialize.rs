@@ -6,28 +6,87 @@ pub struct ProxyPreInitialize<'info> {
     /// CHECK: Safe
     pub amm_program: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"target_associated_seed"
+        ], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub amm_target_orders: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"withdraw_associated_seed"
+        ], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub pool_withdraw_queue: AccountInfo<'info>,
     /// CHECK: Safe
+    #[account( 
+        seeds = [b"amm authority"], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub amm_authority: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"lp_mint_associated_seed"
+        ], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub lp_mint: AccountInfo<'info>,
     /// CHECK: Safe
     pub coin_mint: AccountInfo<'info>,
     /// CHECK: Safe
     pub pc_mint: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"coin_vault_associated_seed"
+        ], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub pool_coin_token_account: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"pc_vault_associated_seed"
+        ], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub pool_pc_token_account: AccountInfo<'info>,
     /// CHECK: Safe
-    #[account(mut)]
+    #[account(
+        mut, 
+        seeds = [
+            amm_program.key.as_ref(),
+            serum_market.key.as_ref(),
+            b"temp_lp_token_associated_seed"
+        ], 
+        bump,
+        seeds::program = amm_program.key
+    )]
     pub pool_temp_lp_token_account: AccountInfo<'info>,
     /// CHECK: Safe
     pub serum_market: AccountInfo<'info>,
